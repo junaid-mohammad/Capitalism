@@ -1,0 +1,75 @@
+<!-- views/index.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Injects <header> with meta tags, title, CSS -->
+  <%- include("partials/header") %>
+
+  <!-- 
+    Pass dynamic quiz values into JS-accessible attributes:
+    - data-was-correct: Boolean for last answer's correctness
+    - data-correct-answer: The expected capital
+    - data-total-score: Running score
+  -->
+  <body 
+    data-was-correct="<%= locals.wasCorrect %>" 
+    data-correct-answer="<%= locals.correctAnswer %>" 
+    data-total-score="<%= locals.totalScore %>"
+  >
+    <div class="page-container">
+      <div id="app">
+        <!-- Main game form -->
+        <form class="card" action="/submit" method="post">
+
+          <!-- In-game Title + Subheading -->
+          <div class="horizontal-container">
+            <div class="welcome-message">
+              <h1 class="capitalism-heading">🦈 Capitalism</h1>
+              <p class="capitalism-subheading">Where failure isn’t an option — it’s default.</p>
+            </div>
+          </div>
+
+          <!-- Score display -->
+          <div class="horizontal-container">
+            <h3>
+              🧻 Net Worth:
+              <span id="score"><%= locals.totalScore ? totalScore : "0" %></span>
+            </h3>
+          </div>
+
+          <!-- Country prompt -->
+          <h1 id="countryName"><%= question.country %></h1>
+
+          <!-- Answer input -->
+          <div class="answer-container">
+            <input
+              type="text"
+              name="answer"
+              id="userInput"
+              placeholder="Don’t overthink, that’s not your strength."
+              autofocus
+              autocomplete="off"
+            />
+          </div>
+
+          <!-- Submit button with dynamic insult -->
+          <button type="submit">SUBMIT
+            <% if (locals.wasCorrect) { %>
+              <span class="checkmark">✔</span>
+            <% } else if (locals.wasCorrect === false) { %>
+              <span class="cross" id="error">✖</span>
+            <% } %>
+          </button>
+        </form>
+      </div>
+
+      <!-- Rotates insulting CTA phrases -->
+      <script src="/scripts/submit-button.js"></script>
+
+      <!-- Footer with contact links -->
+      <%- include("partials/footer") %>
+    </div>
+
+    <!-- Game over UI trigger -->
+    <script src="/scripts/game-over.js"></script>
+  </body>
+</html>
