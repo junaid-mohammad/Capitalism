@@ -283,7 +283,7 @@ GitHub Actions will build and deploy your app automatically to Azure.
 This project is also connected to **Azure DevOps** as a secondary remote:
 
 ```bash
-git remote add azure https://dev.azure.com/your-org/your-project/_git/your-repo
+git remote add azure https://Junaid-Arif@dev.azure.com/Junaid-Arif/Capitalism/_git/Capitalism
 git push azure main
 ```
 
