@@ -189,6 +189,7 @@ After making changes:
 ```bash
 git add .
 git commit -m "Your change message"
+git pull origin main --rebase
 git push origin main
 ```
 
