@@ -25,8 +25,8 @@ const restartPhrases = [
     // Inject Game Over card into #app container
     document.getElementById("app").innerHTML = `
       <div class="card game-over-card">
-        <h1 class="game-over-heading">Generationally Humiliating.</h1>
-        <p>And that’s your legacy: ${totalScore}</p>
+        <h1>Generationally Humiliating.</h1>
+        <p>And that’s your legacy: <strong>${totalScore}</strong></p>
         <p>The capital you couldn’t exploit: <strong>${correctAnswer}</strong></p>
         <p class="message">Try again. But like... smarter.</p>
         <a href="/" class="restart-button">${restartText}</a>

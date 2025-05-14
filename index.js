@@ -13,7 +13,7 @@ dotenv.config();
 
 // Create Express app instance
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Middleware setup
 app.use(bodyParser.urlencoded({ extended: true })); // Parse form-encoded data
