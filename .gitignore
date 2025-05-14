@@ -38,5 +38,6 @@ bower_components/
 *.swp
 *.lock-wscript
 
-# CSV files
+# CSV and SQL files
 *.csv
+*.sql

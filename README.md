@@ -1,18 +1,20 @@
 # Capitalism 🦈
 
-[![GitHub](https://img.shields.io/badge/Source-GitHub-black?logo=github)](https://github.com/junaid-mohammad/Capitalism)
-[![Azure DevOps](https://img.shields.io/badge/Version%20Controlled-Azure%20DevOps-blue?logo=azure-devops)](https://dev.azure.com/Junaid-Arif/Capitalism)
-[![Azure App Service](https://img.shields.io/badge/Hosted%20on-Azure%20App%20Service-brightgreen?logo=microsoft-azure)](https://capitalism-prod-url.com) <!-- Replace with real link -->
+[![Deployed via GitHub Actions](https://img.shields.io/badge/Deployed%20via-GitHub%20Actions-blue?logo=github)](https://github.com/junaid-mohammad/Capitalism)
+[![Azure App Service](https://img.shields.io/badge/Hosted%20on-Azure%20App%20Service-brightgreen)](https://capitalism-hhgph9gsambaf6hm.canadacentral-01.azurewebsites.net/)
+[![Azure DevOps](https://img.shields.io/badge/Tracked%20in-Azure%20DevOps-blue)](https://dev.azure.com/Junaid-Arif/Capitalism)
 
 This repository contains the source code for **Capitalism**, a chaotic, meme-fueled quiz game that asks: _how well do you know your capital cities?_ Get it right and grow your net worth. Get it wrong... and suffer the consequences. It’s ruthless, unhinged, and unapologetically capitalist.
+
+Now powered by a full-stack architecture with a live **PostgreSQL cloud database**, this app dynamically fetches capital cities in real time and is fully deployed via **Azure App Service** with continuous deployment from **GitHub Actions**. Whether you're shorting your IQ or liquidating your pride, the system is scalable, secure, and savage.
 
 ---
 
 ## 🖥️ Live Website
 
-👉 **[Capitalism Quiz](https://capitalism-prod-url.com)** _(Hosted on Microsoft Azure)_  
-👉 **[Azure DevOps Project](https://dev.azure.com/Junaid-Arif/Capitalism)**  
-👉 **[GitHub Repository](https://github.com/junaid-mohammad/Capitalism)**
+👉 **[Capitalism Quiz](https://capitalism-hhgph9gsambaf6hm.canadacentral-01.azurewebsites.net/)**  
+👉 **[GitHub Repo](https://github.com/junaid-mohammad/Capitalism)**  
+👉 **[Azure DevOps](https://dev.azure.com/Junaid-Arif/Capitalism)**
 
 ---
 
@@ -21,12 +23,12 @@ This repository contains the source code for **Capitalism**, a chaotic, meme-fue
 **Capitalism** was designed to:
 
 - Reinforce my experience building **full-stack apps** with **Node.js**, **Express**, and **EJS**.
-- Build an app with a **fully dynamic back-end** and **PostgreSQL** integration.
+- Integrate a live **PostgreSQL cloud database** using Azure's managed database service.
 - Explore **server-side rendering**, user input handling, and quiz state management.
 - Design a bold, humorous, and mobile-friendly **UI/UX**.
 - Structure an app for **long-term maintainability**, including **modular EJS partials** and organized static assets.
-- Use **Azure App Service** and **multi-remote Git setups** with **GitHub + Azure DevOps**.
-- Lay the groundwork for future **CI/CD integration via GitHub Actions** or **Azure Pipelines**.
+- Host a real-world project using **Azure App Service** and deploy continuously via **GitHub Actions**.
+- Enable seamless local and cloud development environments using `.env` and Azure App Config.
 
 ---
 
@@ -41,6 +43,7 @@ This repository contains the source code for **Capitalism**, a chaotic, meme-fue
 - **Custom Background + Theming**: Consistent visual identity through SVG backgrounds, bold fonts, and emoji branding.
 - **Modular EJS Structure**: Views are divided into partials (`header`, `footer`) for cleaner maintenance.
 - **Scripts & Styling**: Submit button insults and Game Over content are handled via separate JS modules.
+- **Cloud-Backed Quiz Data**: All capital cities are now pulled from a live PostgreSQL instance hosted in Azure.
 
 ---
 
@@ -49,15 +52,15 @@ This repository contains the source code for **Capitalism**, a chaotic, meme-fue
 - **Node.js** — JavaScript runtime
 - **Express** — Web framework
 - **EJS** — Embedded JavaScript templates
-- **PostgreSQL** — Relational database
+- **PostgreSQL** — Relational database (local + Azure cloud)
 - **pg** — Node.js PostgreSQL client
 - **Body-Parser** — Middleware for form data
 - **JavaScript (Client-side)** — Handles dynamic button labeling and Game Over rendering
 - **HTML5 / CSS3** — Semantic layout and styling
 - **Flexbox & Media Queries** — Responsive layout design
-- **Azure App Service** — Production hosting
-- **Azure DevOps** — Secondary version control and CI/CD
-- **GitHub** — Main repository + Actions for future CI/CD setup
+- **Azure App Service** — Cloud hosting
+- **Azure PostgreSQL Flexible Server** — Managed cloud database
+- **GitHub** — Source control and CI/CD via GitHub Actions
 
 ---
 
@@ -69,81 +72,168 @@ This repository contains the source code for **Capitalism**, a chaotic, meme-fue
 - Implementing a consistent, unhinged **brand voice** across technical UI.
 - Writing responsive **mobile-first CSS**, accounting for max-width and overflow issues.
 - Modularizing large projects with **partials**, **script folders**, and **clean stylesheets**.
-- Integrating multi-remote Git workflows with **GitHub and Azure DevOps**.
-- Structuring projects with **future expansion and CI/CD in mind**.
+- Working with **Azure cloud infrastructure**, including App Service and PostgreSQL Flexible Server.
+- Setting up **environment-agnostic database logic** with `.env` and Azure App Settings.
+- Deploying via **GitHub Actions** and debugging full-stack cloud deployment pipelines.
 
 ---
 
 ## 🚀 Deployment & Workflow
 
-The app is currently **hosted on Azure App Service** and version-controlled via both **GitHub** and **Azure DevOps**.  
-CI/CD is not configured _yet_, but the structure is in place for **GitHub Actions** or **Azure Pipelines**.
+Capitalism is deployed using **Azure App Service** and backed by a cloud-hosted **PostgreSQL Flexible Server** for persistent quiz data. Continuous deployment is handled via **GitHub Actions**, while **Azure DevOps** is retained for secondary version control and potential future CI/CD pipelines.
+
+The app supports **dual-environment development**: it runs locally using a `.env` file and connects to cloud infrastructure in production via Azure App Settings. Below is a complete deployment and configuration guide for reproducing this setup.
 
 ---
 
-### 🛠 Deployment Setup (Steps I Took)
+### 🧱 1. Set Up Azure Services
 
-1. **Created Azure App Service**
-
-   - Provisioned a new Node.js app on Azure.
-
-2. **Initialized GitHub Repo**
-
-   - Created the `Capitalism` GitHub repo and pushed full codebase.
-
-3. **Created Azure DevOps Project**
-
-   - Added a project under the name _Capitalism_ for backup control and future pipelines.
-
-4. **Added Azure DevOps Remote**
-
-   ```bash
-   git remote add azure https://Junaid-Arif@dev.azure.com/Junaid-Arif/Capitalism/_git/Capitalism
-   git push azure main
-   ```
-
-5. **Dual Remote Deployment**
-
-   ```bash
-   git push origin main   # Pushes to GitHub
-   git push azure main    # Pushes to Azure DevOps
-   ```
-
-6. **Linked DevOps to App Service**
-
-   - Connected Azure DevOps repo to App Service via Deployment Center.
-
-7. **Ready for GitHub Actions (Optional)**
-
-   - Project structure supports easy CI/CD integration via `.yml` workflows when ready.
+- Create a **Resource Group** to organize your cloud resources
+- Provision an **Azure Database for PostgreSQL Flexible Server**:
+  - Recommended: `Burstable B1ms` for development
+  - Create a new PostgreSQL database (e.g., `capitalism`)
+  - Ensure public access is enabled and add your current IP under **Firewall Rules**
+- Create an **Azure App Service** with a Node.js runtime (e.g., Node 18 LTS)
 
 ---
 
-### 🔥 Deployment Workflow (Current)
+### 🗃 2. Prepare and Upload Your SQL Table
+
+Export your local `capitals` table from your local `world` database using:
+
+```bash
+pg_dump -U your_local_user -d world -t capitals --column-inserts > capitals.sql
+```
+
+Upload it to Azure with:
+
+```bash
+psql "host=your-db-host.postgres.database.azure.com port=5432 dbname=capitalism user=your_admin_user sslmode=require" < capitals.sql
+```
+
+(Optional but recommended):
+
+```bash
+echo "capitals.sql" >> .gitignore
+git rm --cached capitals.sql
+git commit -m "Remove SQL dump from repo"
+```
+
+---
+
+### ⚙️ 3. Configure Environment Variables
+
+#### 📍 Local Development (`.env`)
+
+```env
+DB_USER=postgres
+DB_HOST=localhost
+DB_NAME=your_local_db
+DB_PASSWORD=your_local_password
+DB_PORT=5432
+```
+
+#### ☁️ Azure Production (App Service > Configuration)
+
+```env
+DB_USER=your_admin_user
+DB_HOST=your-db-host.postgres.database.azure.com
+DB_NAME=capitalism
+DB_PASSWORD=your_azure_password
+DB_PORT=5432
+NODE_ENV=production
+```
+
+---
+
+### 🔐 4. Secure Cross-Environment Database Logic
+
+In your database connection file (e.g., `quizData.js`), use:
+
+```js
+const db = new pg.Client({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
+});
+```
+
+✅ This allows you to switch between local and cloud DBs without touching the code.
+
+---
+
+### 🚀 5. Set Up GitHub Actions Deployment
+
+1. Go to **Azure Portal → App Service → Deployment Center**
+2. Choose:
+
+   - Source: `GitHub`
+   - Repo: your project repo
+   - Branch: `main`
+   - Build provider: `GitHub Actions`
+
+3. Azure auto-generates a GitHub Actions workflow under `.github/workflows/`
+
+---
+
+### 🔁 6. Deployment Workflow
+
+After making changes:
 
 ```bash
 git add .
-git commit -m "your roast-worthy commit message"
-git push origin main    # GitHub
-git push azure main     # Azure DevOps & auto-deploy
+git commit -m "Your change message"
+git push origin main
 ```
+
+GitHub Actions will build and deploy your app automatically to Azure.
+
+---
+
+### 📦 Azure DevOps (Optional)
+
+This project is also connected to **Azure DevOps** as a secondary remote:
+
+```bash
+git remote add azure https://dev.azure.com/your-org/your-project/_git/your-repo
+git push azure main
+```
+
+Currently used for **backup source control**, Azure DevOps may be used in the future for CI/CD via **Azure Pipelines**.
+
+---
+
+### ✅ Summary
+
+| Environment | DB Location      | Configuration Source |
+| ----------- | ---------------- | -------------------- |
+| Local       | Localhost        | `.env` file          |
+| Production  | Azure PostgreSQL | Azure App Settings   |
+
+This setup enables seamless development and deployment with a live cloud database and continuous delivery.
 
 ---
 
 ## 🤝 Contribution
 
-This was built as a personal passion project (and maybe a cry for help), but PRs are welcome. If you’d like to add multiplayer, leaderboard logic, or just fresh roasts — fork away.
+This project was built as a personal passion project (and possibly a coping mechanism), but contributions are welcome. If you’d like to add multiplayer mode, global leaderboards, or just inject some fresh economic insults — fork away and submit a PR.
 
 ---
 
 ## 📄 License
 
-Open-source and available for chaos, cloning, remixing, and educational trauma.
+This project is open-source and available for cloning, remixing, learning, and unleashing upon your unsuspecting friends. Use it wisely — or irresponsibly. It’s your call.
 
 ---
 
 ## 🔗 Credits
 
 - Inspired by capitalism. Unfortunately.
-- Built with Node.js, PostgreSQL, Express, and way too much sarcasm.
-- Branding and concept by [@junaid-mohammad](https://github.com/junaid-mohammad)
+- Built with **Node.js**, **Express**, **PostgreSQL**, and an aggressive amount of sarcasm.
+- Concept, code, and chaos by [@junaid-arif](https://github.com/junaid-mohammad)
