@@ -147,7 +147,3 @@ Open-source and available for chaos, cloning, remixing, and educational trauma.
 - Inspired by capitalism. Unfortunately.
 - Built with Node.js, PostgreSQL, Express, and way too much sarcasm.
 - Branding and concept by [@junaid-mohammad](https://github.com/junaid-mohammad)
-
----
-
-Let me know when you're ready to drop this into the repo and want a matching `README.md` badge set for GitHub Actions, or if you’d like a `LICENSE`, `CONTRIBUTING.md`, or `docs/` folder too.
