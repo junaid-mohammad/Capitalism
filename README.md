@@ -99,25 +99,106 @@ The app supports **dual-environment development**: it runs locally using a `.env
 
 ### 🗃 2. Prepare and Upload Your SQL Table
 
-Export your local `capitals` table from your local `world` database using:
+To move your local PostgreSQL data to Azure, follow this full workflow:
+
+#### ✅ Step 1: Export Your Table from Local PostgreSQL
+
+Use `pg_dump` to export the desired table to a `.sql` file:
 
 ```bash
-pg_dump -U your_local_user -d world -t capitals --column-inserts > capitals.sql
+pg_dump -U your_local_user -d your_local_db -t your_table --column-inserts > your_table.sql
+# You’ll be prompted for your local PostgreSQL password
 ```
 
-Upload it to Azure with:
+This generates a portable SQL dump you can import into your Azure DB.
+
+---
+
+#### ✅ Step 2: Configure Azure PostgreSQL for Access
+
+Go to **Azure Portal → PostgreSQL Flexible Server → Networking**:
+
+- ✅ Add your **current IP address** under **Firewall Rules**
+- ✅ Set **Public Access** to **"Enabled (all IPs allowed)"** (You can restrict it later after import)
+
+---
+
+#### ✅ Step 3: Connect to Azure and Create the Target Database
+
+You **cannot import directly** unless the database already exists. First, connect to your Azure server using the default `postgres` DB:
 
 ```bash
-psql "host=your-db-host.postgres.database.azure.com port=5432 dbname=capitalism user=your_admin_user sslmode=require" < capitals.sql
+psql "host=your-server-name.postgres.database.azure.com port=5432 dbname=postgres user=your_admin_user sslmode=require"
 ```
 
-(Optional but recommended):
+Enter your **Azure DB password** when prompted.
+
+Then, inside the `psql` prompt:
+
+```sql
+CREATE DATABASE your_target_db;
+\q
+```
+
+✅ This creates the database where your table will live.
+
+---
+
+#### ✅ Step 4: Import the Table into Your New Azure DB
+
+Now import your SQL dump using:
 
 ```bash
-echo "capitals.sql" >> .gitignore
-git rm --cached capitals.sql
-git commit -m "Remove SQL dump from repo"
+psql "host=your-server-name.postgres.database.azure.com port=5432 dbname=your_target_db user=your_admin_user sslmode=require" < your_table.sql
+# You’ll be prompted again for your Azure DB password
 ```
+
+If successful, you’ll see many `SET`, `CREATE`, and `INSERT` statements.
+
+---
+
+#### ✅ Step 5: Verify the Table
+
+To check that the table and data were imported:
+
+```bash
+psql "host=your-server-name.postgres.database.azure.com port=5432 dbname=your_target_db user=your_admin_user sslmode=require"
+```
+
+Then inside the SQL shell:
+
+```sql
+-- List all tables
+\dt
+-- View a sample of imported data
+SELECT * FROM your_table LIMIT 5;
+\q
+```
+
+---
+
+### ⚠️ Common Gotchas
+
+| Problem                                           | Fix                                                                                                |
+| ------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `FATAL: database "your_target_db" does not exist` | You skipped creating the DB — go back to Step 3                                                    |
+| `Operation timed out`                             | IP firewall not configured properly in Azure                                                       |
+| `role "postgres" does not exist`                  | Dump references local roles — safe to ignore unless you're using ownership or permissions          |
+| `zsh: command not found: \q`                      | You’re typing psql commands in the regular terminal — make sure you're inside the SQL shell (`=>`) |
+
+---
+
+#### 🧼 Optional but Recommended Cleanup
+
+Add your `.sql` dump to `.gitignore`:
+
+```bash
+echo "*.sql" >> .gitignore
+git rm --cached your_table.sql
+git commit -m "Removed SQL dump from version control"
+```
+
+✅ At this point, your data is now live in the cloud and ready to be queried from your Node.js app!
 
 ---
 
@@ -136,10 +217,10 @@ DB_PORT=5432
 #### ☁️ Azure Production (App Service > Configuration)
 
 ```env
-DB_USER=your_admin_user
+DB_USER=your_azure_admin_user
 DB_HOST=your-db-host.postgres.database.azure.com
-DB_NAME=capitalism
-DB_PASSWORD=your_azure_password
+DB_NAME=newly_created_db_in_azure
+DB_PASSWORD=your_azure_db_password
 DB_PORT=5432
 NODE_ENV=production
 ```
@@ -178,7 +259,7 @@ const db = new pg.Client({
    - Branch: `main`
    - Build provider: `GitHub Actions`
 
-3. Azure auto-generates a GitHub Actions workflow under `.github/workflows/`
+3. Azure will auto-generate a GitHub Actions workflow (e.g., `.github/workflows/main.yml`) to handle deployments automatically.
 
 ---
 
@@ -187,10 +268,10 @@ const db = new pg.Client({
 After making changes:
 
 ```bash
-git add .
-git commit -m "Your change message"
-git pull origin main --rebase
-git push origin main
+git add .                                    # Stage changes
+git commit -m "Your change message"          # Commit locally
+git pull origin main --rebase                # Sync with remote (prevent conflicts)
+git push origin main                         # Trigger GitHub Actions deployment
 ```
 
 GitHub Actions will build and deploy your app automatically to Azure.
